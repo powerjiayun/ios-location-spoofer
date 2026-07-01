@@ -1,6 +1,15 @@
 #!name=iOS Location Spoofer
 #!desc=劫持 Apple 定位封包，把坐标换成你想要的。Stash 覆写版。
 #!homepage=https://github.com/mekos2772/ios-location-spoofer
+#
+# 推荐：本地脚本模式（不需要联网拉）
+# 1. 把项目里 location-spoofer.js 复制到 iOS Files App → "On My iPhone → Stash" 同级目录
+# 2. Stash 启动时会按 path 字段加载本地脚本（不发起 DNS 查询）
+# 3. DNS 受限环境（家庭路由器把 raw.githubusercontent.com 解析成 0.0.0.0）也能用
+#
+# 备选：远程脚本模式
+# - 取消下方 path 行的注释、把 url 行注释起来即可
+# - 推荐用 jsDelivr 镜像，会比 raw.githubusercontent.com 在大陆可达性更好
 
 http:
   script:
@@ -18,7 +27,17 @@ http:
     - bluedot.is.autonavi.com
     - bluedot.is.autonavi.com.gds.alibabadns.com
 
+# script-providers 用 path 字段而不是 url：
+# - path 必须放在配置文件所在目录及子目录内
+# - iOS 文件 App → On My iPhone → Stash 下能看到 .stoverride 文件，
+#   把 location-spoofer.js 放同目录即可
 script-providers:
   ios-location-spoofer:
-    url: https://raw.githubusercontent.com/mekos2772/ios-location-spoofer/main/location-spoofer.js
+    path: location-spoofer.js
     interval: 86400
+
+# 备选：远程 URL（如果路由器 DNS 正常）
+# script-providers:
+#   ios-location-spoofer:
+#     url: https://raw.githubusercontent.com/mekos2772/ios-location-spoofer/main/location-spoofer.js
+#     interval: 86400
